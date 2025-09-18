@@ -4,5 +4,5 @@ import com.example.domain.models.CustomResult
 import com.example.domain.models.ExampleModel
 
 interface ExampleRepository {
-    fun getExamples(): CustomResult<List<ExampleModel>>
+    suspend fun getExamples(): CustomResult<List<ExampleModel>>
 }
