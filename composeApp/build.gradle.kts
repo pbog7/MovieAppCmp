@@ -32,6 +32,7 @@ kotlin {
             implementation(libs.ktor.client.okhttp)
         }
         commonMain.dependencies {
+            implementation(libs.material3Adaptive)
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
