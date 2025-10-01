@@ -63,6 +63,7 @@ kotlin {
                 implementation(libs.material3Adaptive)
                 implementation(libs.androidx.lifecycle.viewmodelCompose)
                 implementation(libs.bundles.koin)
+                implementation(libs.kermitLogger)
                 implementation(project(":domain"))
                 // Add KMP dependencies here
             }

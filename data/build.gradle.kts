@@ -64,6 +64,7 @@ kotlin {
                 implementation(libs.kotlin.stdlib)
                 implementation(libs.bundles.ktor)
                 implementation(libs.bundles.kotlinXSerialization)
+                implementation(libs.kermitLogger)
                 // Add KMP dependencies here
             }
         }

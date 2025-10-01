@@ -13,6 +13,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.example.core.ActionState
+import com.example.core.appLogger
 import com.example.domain.models.ExampleModel
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -21,8 +22,8 @@ fun HomeScreen(
     viewModel: HomeViewModel = koinViewModel()
 ) {
     val state by viewModel.viewState.collectAsState()
-    val onClick = remember { {viewModel.getExamples()} }
-
+    val onClick = remember { { viewModel.getExamples() } }
+    appLogger.i { "Home Screen composition" }
     Column(
         Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,

@@ -71,6 +71,7 @@ kotlin {
                 implementation(compose.components.uiToolingPreview)
                 implementation(libs.androidx.lifecycle.viewmodelCompose)
                 implementation(libs.bundles.koin)
+                implementation(libs.kermitLogger)
                 implementation(project(":domain"))
                 implementation(project(":core"))
                 // Add KMP dependencies here
