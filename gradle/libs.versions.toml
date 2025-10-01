@@ -19,6 +19,7 @@ kotlinXserializationVersion = "1.9.0"
 ktorVersion = "3.3.0"
 koinVersion = "4.1.1"
 material3AdaptiveVersion = "1.9.0-beta06"
+kermitLoggerVersion = "2.0.4"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -53,7 +54,7 @@ kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinXserializationVersion" }
 # --- Kotlinx serialization END ---
 material3Adaptive = { module = "org.jetbrains.compose.material3:material3-adaptive-navigation-suite", version.ref = "material3AdaptiveVersion" }
-
+kermitLogger = { module = "co.touchlab:kermit", version.ref = "kermitLoggerVersion" }
 
 [bundles]
 ktor = ["ktor-client-core", "ktor-client-content-negotiation", "ktor-client-logging", "ktor-serialization-kotlinx-json"]
