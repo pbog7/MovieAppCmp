@@ -1,7 +1,12 @@
+import java.util.Properties
+import kotlin.apply
+
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidKotlinMultiplatformLibrary)
     alias(libs.plugins.androidLint)
+    alias(libs.plugins.buildKonfig)
+    alias(libs.plugins.kotlinSerializationPlugin)
 }
 
 kotlin {
@@ -104,4 +109,35 @@ kotlin {
         }
     }
 
+}
+val secretsFile = rootProject.file("secrets.properties")
+val secrets = Properties().apply {
+    if (secretsFile.exists()) {
+        load(secretsFile.inputStream())
+    }
+}
+
+val buildFlavor: String = project.findProperty("buildFlavor")?.toString() ?: "dev"
+
+buildkonfig {
+    packageName = "com.example.movieappcmp"
+
+    // Required base config
+    defaultConfigs {
+        buildConfigField(com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING, "FLAVOR", buildFlavor)
+        buildConfigField(com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING, "BASE_URL", "https://api.themoviedb.org/3/")
+        buildConfigField(com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING, "API_KEY", secrets["API_KEY_DEV"]?.toString() ?: "")
+    }
+
+    // Dev config override
+    defaultConfigs("dev") {
+        buildConfigField(com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING, "BASE_URL", "https://api.themoviedb.org/3/")
+        buildConfigField(com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING, "API_KEY", secrets["API_KEY_DEV"]?.toString() ?: "")
+    }
+
+    // Prod config override
+    defaultConfigs("prod") {
+        buildConfigField(com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING, "BASE_URL", "https://api.themoviedb.org/3/")
+        buildConfigField(com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING, "API_KEY", secrets["API_KEY_PROD"]?.toString() ?: "")
+    }
 }
