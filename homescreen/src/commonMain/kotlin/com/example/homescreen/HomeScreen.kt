@@ -14,7 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.example.core.ActionState
 import com.example.core.appLogger
-import com.example.domain.models.ExampleModel
+import com.example.domain.models.Movie
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
@@ -22,14 +22,14 @@ fun HomeScreen(
     viewModel: HomeViewModel = koinViewModel()
 ) {
     val state by viewModel.viewState.collectAsState()
-    val onClick = remember { { viewModel.getExamples() } }
+    val onClick = remember { { viewModel.getPopularMovies() } }
     appLogger.i { "Home Screen composition" }
     Column(
         Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        ExampleText(examples = state.examples, getExamples = onClick)
+        ExampleText(examples = state.popularMovies, getExamples = onClick)
         OtherText(otherText = state.otherText, updateOtherText = { viewModel.updateOtherText() })
     }
 
@@ -37,17 +37,17 @@ fun HomeScreen(
 
 
 @Composable
-fun ExampleText(examples: ActionState<List<ExampleModel>>, getExamples: () -> Unit) {
+fun ExampleText(examples: ActionState<List<Movie>>, getExamples: () -> Unit) {
     val onClick = remember { getExamples }
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
         Button(onClick = { onClick() }) {
-            Text("Get Examples")
+            Text("Get Movies")
         }
         Text(
-            text = examples.data?.first()?.example ?: "",
+            text = examples.data?.first()?.title ?: "",
             style = MaterialTheme.typography.titleLarge
         )
     }

@@ -1,10 +1,12 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.buildKonfig)
 }
 
 kotlin {
@@ -80,5 +82,30 @@ android {
 
 dependencies {
     debugImplementation(compose.uiTooling)
+}
+val secretsFile = rootProject.file("secrets.properties")
+val secrets = Properties().apply {
+    if (secretsFile.exists()) {
+        load(secretsFile.inputStream())
+    }
+}
+
+val buildFlavor: String = project.findProperty("buildFlavor")?.toString() ?: "dev"
+
+buildkonfig {
+    packageName = "com.example.movieappcmp"
+
+    // Required base config
+    defaultConfigs {
+        buildConfigField(com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING, "FLAVOR", buildFlavor)
+    }
+
+    // Dev config override
+    defaultConfigs("dev") {
+    }
+
+    // Prod config override
+    defaultConfigs("prod") {
+    }
 }
 
