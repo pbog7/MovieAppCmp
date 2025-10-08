@@ -12,7 +12,7 @@ kotlin {
     // which platforms this KMP module supports.
     // See: https://kotlinlang.org/docs/multiplatform-discover-project.html#targets
     androidLibrary {
-        namespace = "com.example.homescreen"
+        namespace = "com.example.movielist"
         minSdk = libs.versions.android.minSdk.get().toInt()
         compileSdk = libs.versions.android.compileSdk.get().toInt()
 
@@ -33,7 +33,7 @@ kotlin {
     // A step-by-step guide on how to include this library in an XCode
     // project can be found here:
     // https://developer.android.com/kotlin/multiplatform/migrate
-    val xcfName = "homescreenKit"
+    val xcfName = "movieslistKit"
 
     iosX64 {
         binaries.framework {
@@ -69,12 +69,11 @@ kotlin {
                 implementation(compose.ui)
                 implementation(compose.components.resources)
                 implementation(compose.components.uiToolingPreview)
-                implementation(libs.androidx.lifecycle.viewmodelCompose)
                 implementation(libs.bundles.koin)
                 implementation(libs.kermitLogger)
+                implementation(libs.coil.compose)
                 implementation(project(":domain"))
                 implementation(project(":core"))
-                implementation(project(":movielist"))
                 // Add KMP dependencies here
             }
         }
@@ -87,6 +86,7 @@ kotlin {
 
         androidMain {
             dependencies {
+                implementation(libs.ktor.client.okhttp)
                 // Add Android-specific dependencies here. Note that this source set depends on
                 // commonMain by default and will correctly pull the Android artifacts of any KMP
                 // dependencies declared in commonMain.
@@ -103,6 +103,7 @@ kotlin {
 
         iosMain {
             dependencies {
+                implementation(libs.ktor.client.darwin)
                 // Add iOS-specific dependencies here. This a source set created by Kotlin Gradle
                 // Plugin (KGP) that each specific iOS target (e.g., iosX64) depends on as
                 // part of KMP’s default source set hierarchy. Note that this source set depends

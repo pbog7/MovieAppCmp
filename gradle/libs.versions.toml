@@ -22,6 +22,7 @@ material3AdaptiveVersion = "1.9.0-beta06"
 kermitLoggerVersion = "2.0.8"
 buildKonfigVersion = "0.17.1"
 kotlinSerializationPluginVersion = "1.9.0"
+coilVersion = "3.3.0"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -57,6 +58,9 @@ kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 # --- Kotlinx serialization END ---
 material3Adaptive = { module = "org.jetbrains.compose.material3:material3-adaptive-navigation-suite", version.ref = "material3AdaptiveVersion" }
 kermitLogger = { module = "co.touchlab:kermit", version.ref = "kermitLoggerVersion" }
+# --- Coil image loading library END ---
+coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coilVersion" }
+coil-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "ktorVersion" }
 
 [bundles]
 ktor = ["ktor-client-core", "ktor-client-content-negotiation", "ktor-client-logging", "ktor-serialization-kotlinx-json"]
