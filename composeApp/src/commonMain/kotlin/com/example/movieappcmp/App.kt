@@ -15,7 +15,13 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import coil3.ImageLoader
+import coil3.compose.setSingletonImageLoaderFactory
+import coil3.memory.MemoryCache
+import coil3.network.ktor3.KtorNetworkFetcherFactory
+import coil3.request.crossfade
 import com.example.domain.usecase.GetExamplesUseCase
+import io.ktor.client.HttpClient
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.koinInject
@@ -23,28 +29,21 @@ import org.koin.compose.koinInject
 @Composable
 @Preview
 fun App() {
-    val myUseCase: GetExamplesUseCase = koinInject()
-    val scope = rememberCoroutineScope()
+    val httpClient: HttpClient = koinInject()
+    setSingletonImageLoaderFactory { context ->
+        ImageLoader.Builder(context).crossfade(true)
+            .memoryCache {
+                MemoryCache.Builder()
+                    .maxSizePercent(context, 0.25)
+                    .build()
+            }
+            .components {
+                add(KtorNetworkFetcherFactory(httpClient))
+            }
+            .build()
 
-    var result by remember { mutableStateOf<String?>(null) }
+    }
     MaterialTheme {
         MainScreen()
-//        var showContent by remember { mutableStateOf(false) }
-//        Column(
-//            modifier = Modifier
-//                .background(MaterialTheme.colorScheme.primaryContainer)
-//                .safeContentPadding()
-//                .fillMaxSize(),
-//            horizontalAlignment = Alignment.CenterHorizontally,
-//        ) {
-//            Button(onClick = {  scope.launch {
-//                result = myUseCase().toString()
-//            } }) {
-//                Text("Click me!")
-//            }
-//            if (result != null) {
-//                Text("Result = $result")
-//            }
-//        }
     }
 }

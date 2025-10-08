@@ -42,6 +42,8 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.bundles.koin)
+            implementation(libs.coil.compose)
+            implementation(libs.coil.network.ktor)
             implementation(project(":domain"))
             implementation(project(":data"))
             implementation(project(":homescreen"))
@@ -98,14 +100,24 @@ buildkonfig {
     // Required base config
     defaultConfigs {
         buildConfigField(com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING, "FLAVOR", buildFlavor)
+        buildConfigField(com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING, "BASE_URL", "https://api.themoviedb.org/3/")
+        buildConfigField(com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING, "API_KEY", secrets["API_KEY_DEV"]?.toString() ?: "")
+        buildConfigField(com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING, "BASE_IMAGE_URL","https://image.tmdb.org/t/p/")
     }
+
 
     // Dev config override
     defaultConfigs("dev") {
+        buildConfigField(com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING, "BASE_URL", "https://api.themoviedb.org/3/")
+        buildConfigField(com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING, "API_KEY", secrets["API_KEY_DEV"]?.toString() ?: "")
+        buildConfigField(com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING, "BASE_IMAGE_URL","https://image.tmdb.org/t/p/")
     }
 
     // Prod config override
     defaultConfigs("prod") {
+        buildConfigField(com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING, "BASE_URL", "https://api.themoviedb.org/3/")
+        buildConfigField(com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING, "API_KEY", secrets["API_KEY_PROD"]?.toString() ?: "")
+        buildConfigField(com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING, "BASE_IMAGE_URL","https://image.tmdb.org/t/p/")
     }
 }
 
